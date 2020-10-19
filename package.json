@@ -1,0 +1,22 @@
+{
+  "name": "blaseball",
+  "version": "0.1.0",
+  "description": "A libray for interacting with the blaseball api",
+  "main": "src/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "BeeFox",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.5.3"
+  },
+  "dependencies": {
+    "eventsource": "^1.0.7",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.1"
+  }
+}

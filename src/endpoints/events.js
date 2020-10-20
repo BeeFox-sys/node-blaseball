@@ -5,16 +5,6 @@ const NodeCache = require("node-cache");
 const deduplication = new NodeCache({stdTTL: 60, checkperiod: 60*5});
 
 var {EventEmitter} = require("events");
-/**
- * Event Stream Client
- * 
- * @fires rawGames
- * @fires rawLeagues
- * @fires rawFights
- * @fires rawTemporal
- * @fires gameUpdate
- * @fires gameComplete
- */
 const updates = new EventEmitter();
 
 source.once("open", (event) => {
@@ -26,7 +16,7 @@ source.on("message", (message) => {
     let data = JSON.parse(message.data).value;
 
     if(data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))){
-        if(deduplication.has("raw")) updates.emit("rawUpdate", data);
+        updates.emit("raw", data);
         deduplication.set("raw",data);
     }
     //raw data events
@@ -35,16 +25,16 @@ source.on("message", (message) => {
         deduplication.set("games",data.games);
     }
     if(data.leagues && (JSON.stringify(deduplication.get("leagues")) != JSON.stringify(data.leagues))){
-        if(deduplication.has("leagues")) updates.emit("rawLeagues", data.games);
-        deduplication.set("leagues",data.games);
+        if(deduplication.has("leagues")) updates.emit("rawLeagues", data.leagues);
+        deduplication.set("leagues",data.leagues);
     }
     if(data.temporal && (JSON.stringify(deduplication.get("temporal")) != JSON.stringify(data.temporal))){
-        if(deduplication.has("temportal")) updates.emit("rawTemporal", data.games);
-        deduplication.set("temporal",data.games);
+        if(deduplication.has("temportal")) updates.emit("rawTemporal", data.temporal);
+        deduplication.set("temporal",data.temporal);
     }
     if(data.fights && (JSON.stringify(deduplication.get("fights")) != JSON.stringify(data.fights))){
-        if(deduplication.has("fights")) updates.emit("rawFights", data.games);
-        deduplication.set("fights",data.games);
+        if(deduplication.has("fights")) updates.emit("rawFights", data.fights);
+        deduplication.set("fights",data.fights);
     }
 });
 

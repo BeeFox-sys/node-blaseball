@@ -1,6 +1,6 @@
-const { events } = require("../src");
+const { events, sim } = require("../src");
 
-events.on("raw",(rawData)=>{console.log("Data Update");});
+events.on("raw",(rawData)=>{console.log("Raw Data Update",sim().day);});
 events.on("rawGames",(rawGames)=>{console.log("Raw Games Update");});
 events.on("rawTemporal",(rawTemporal)=>{console.log("Raw Temporal Update");});
 events.on("rawLeagues",(rawLeagues)=>{console.log("Raw Leagues Update");});

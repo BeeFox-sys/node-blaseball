@@ -1,4 +1,4 @@
-const EventSource = require("eventsource");
+import EventSource from "eventsource";
 var source = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"npm-blaseball"}});
 
 const NodeCache = require("node-cache");
@@ -7,12 +7,12 @@ const deduplication = new NodeCache({stdTTL: 60, checkperiod: 60*5});
 var {EventEmitter} = require("events");
 const updates = new EventEmitter();
 
-source.once("open", (event) => {
+source.onopen = (event: MessageEvent<any>) => {
     updates.emit("open", event);
-});
-source.on("error", (error) => console.error);
+};
+source.onerror = console.error;
 
-source.on("message", (message) => {
+source.onmessage = (message) => {
     let data = JSON.parse(message.data).value;
 
     if(data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))){
@@ -36,7 +36,7 @@ source.on("message", (message) => {
         if(deduplication.has("fights")) updates.emit("rawFights", data.fights);
         deduplication.set("fights",data.fights);
     }
-});
+};
 
 updates.on("rawGames",(data)=>{
     data.tomorrowSchedule.forEach(game=>{
@@ -56,4 +56,4 @@ updates.on("rawGames",(data)=>{
     if(data.schedule.every(g=>g.gameComplete) && deduplication.get("games")?.schedule.every(g=>g.gameComplete) === false) updates.emit("gamesFinished", data.schedule, data.tomorrowSchedule);
 });
 
-module.exports = updates;
+export default updates;

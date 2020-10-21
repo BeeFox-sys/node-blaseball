@@ -1,6 +1,6 @@
-const NodeCache = require("node-cache");
+import NodeCache from "node-cache";
 
-const events = require("../endpoints/events.js");
+import events from "../endpoints/events.js";
 
 const StreamData = new NodeCache();
 
@@ -9,6 +9,4 @@ events.on("raw",(data)=>{
     StreamData.set("sim",data.games.sim);
 });
 
-module.exports = {
-    StreamData
-};
+export {StreamData};

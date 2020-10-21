@@ -1,13 +1,14 @@
 import EventSource from "eventsource";
-var source = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"npm-blaseball"}});
+var source:EventSource = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"npm-blaseball"}});
 
-const NodeCache = require("node-cache");
-const deduplication = new NodeCache({stdTTL: 60, checkperiod: 60*5});
+import NodeCache from "node-cache";
+const deduplication:NodeCache = new NodeCache({stdTTL: 60, checkperiod: 60*5});
 
-var {EventEmitter} = require("events");
-const updates = new EventEmitter();
+import {EventEmitter} from "events";
+import { Events, Game, Games } from "../../typings/main";
+const updates:Events = new EventEmitter() as Events;
 
-source.onopen = (event: MessageEvent<any>) => {
+source.onopen = (event: MessageEvent) => {
     updates.emit("open", event);
 };
 source.onerror = console.error;
@@ -38,22 +39,23 @@ source.onmessage = (message) => {
     }
 };
 
-updates.on("rawGames",(data)=>{
-    data.tomorrowSchedule.forEach(game=>{
+updates.on("rawGames",(data:Games)=>{
+    data.tomorrowSchedule.forEach((game:Game)=>{
         deduplication.set(game.id,game);
     });
-    data.schedule.forEach(game => {
-        if(deduplication.get(game.id) == game) return;
+    data.schedule.forEach((game:Game) => {
+        if(deduplication.get<Game>(game.id) == game) return;
         updates.emit("gameUpdate",game,deduplication.get(game.id));
 
-        if(game.gameStart && deduplication.get(game.id)?.gameStart === false) updates.emit("gameStart",game);
+        if(game.gameStart && deduplication.get<Game>(game.id)?.gameStart === false) updates.emit("gameStart",game);
 
-        if(game.gameComplete && deduplication.get(game.id)?.gameComplete === false) updates.emit("gameComplete",game);
+        if(game.gameComplete && deduplication.get<Game>(game.id)?.gameComplete === false) updates.emit("gameComplete",game);
 
         deduplication.set(game.id, game);
     });
     
-    if(data.schedule.every(g=>g.gameComplete) && deduplication.get("games")?.schedule.every(g=>g.gameComplete) === false) updates.emit("gamesFinished", data.schedule, data.tomorrowSchedule);
+    if(data.schedule.every((g:Game)=>g.gameComplete) && deduplication.get<Games>("games")?.schedule.every((g:Game)=>g.gameComplete) === false) updates.emit("gamesFinished", data.schedule, data.tomorrowSchedule);
 });
+
 
 export default updates;

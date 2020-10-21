@@ -1,10 +1,11 @@
 import NodeCache from "node-cache";
+import { RawUpdate } from "../../typings/main.js";
 
 import events from "../endpoints/events.js";
 
 const StreamData = new NodeCache();
 
-events.on("raw",(data)=>{
+events.on("raw",(data: RawUpdate)=>{
     if(!data.games)return;
     StreamData.set("sim",data.games.sim);
 });

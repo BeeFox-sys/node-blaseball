@@ -2,10 +2,11 @@
   "name": "blaseball",
   "version": "0.1.0",
   "description": "A libray for interacting with the blaseball api",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "directories": {
     "test": "tests"
   },
+  "typings": "./typings/main.d.ts",
   "scripts": {
     "test": "jest"
   },

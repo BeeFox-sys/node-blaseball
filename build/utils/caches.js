@@ -13,3 +13,4 @@ events_js_1.default.on("raw", function (data) {
         return;
     StreamData.set("sim", data.games.sim);
 });
+//# sourceMappingURL=caches.js.map

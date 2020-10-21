@@ -1,6 +1,4 @@
 import NodeCache from "node-cache";
-import { RawUpdate } from "../../typings/main.js";
-
 import events from "../endpoints/events.js";
 
 const StreamData = new NodeCache();

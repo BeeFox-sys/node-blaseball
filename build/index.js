@@ -11,3 +11,4 @@ function sim() {
     return caches_js_1.StreamData.get("sim");
 }
 exports.sim = sim;
+//# sourceMappingURL=index.js.map

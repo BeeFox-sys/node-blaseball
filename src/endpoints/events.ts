@@ -5,17 +5,19 @@ import NodeCache from "node-cache";
 const deduplication:NodeCache = new NodeCache({stdTTL: 60, checkperiod: 60*5});
 
 import {EventEmitter} from "events";
-import { Events, Game, Games } from "../../typings/main";
+import { Events } from "../../typings/main";
 const updates:Events = new EventEmitter() as Events;
 
 source.onopen = (event: MessageEvent) => {
     updates.emit("open", event);
 };
-source.onerror = console.error;
+source.onerror = (error)=>{
+    if(error.message == undefined) return;
+    console.error(error)
+};
 
 source.onmessage = (message) => {
     let data = JSON.parse(message.data).value;
-
     if(data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))){
         updates.emit("raw", data);
         deduplication.set("raw",data);

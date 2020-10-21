@@ -12,7 +12,11 @@ var updates = new events_1.EventEmitter();
 source.onopen = function (event) {
     updates.emit("open", event);
 };
-source.onerror = console.error;
+source.onerror = function (error) {
+    if (error.message == undefined)
+        return;
+    console.error(error);
+};
 source.onmessage = function (message) {
     var data = JSON.parse(message.data).value;
     if (data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))) {
@@ -61,3 +65,4 @@ updates.on("rawGames", function (data) {
         updates.emit("gamesFinished", data.schedule, data.tomorrowSchedule);
 });
 exports.default = updates;
+//# sourceMappingURL=events.js.map

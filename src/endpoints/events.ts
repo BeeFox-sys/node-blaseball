@@ -1,5 +1,5 @@
 import EventSource from "eventsource";
-var source:EventSource = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"npm-blaseball"}});
+const source:EventSource = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"npm-blaseball"}});
 
 import NodeCache from "node-cache";
 const deduplication:NodeCache = new NodeCache({stdTTL: 60, checkperiod: 60*5});
@@ -8,35 +8,37 @@ import {EventEmitter} from "events";
 import { Events } from "../../typings/main";
 const updates:Events = new EventEmitter() as Events;
 
-source.onopen = (event: MessageEvent) => {
-    updates.emit("open", event);
+import {ready} from "../index";
+
+source.onopen = () => {
+    updates.emit("open");
 };
 source.onerror = (error)=>{
     if(error.message == undefined) return;
-    console.error(error)
+    console.error(error);
 };
 
 source.onmessage = (message) => {
-    let data = JSON.parse(message.data).value;
+    const data = JSON.parse(message.data).value;
     if(data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))){
-        updates.emit("raw", data);
+        if(ready) updates.emit("raw", data);
         deduplication.set("raw",data);
     }
     //raw data events
     if(data.games && (JSON.stringify(deduplication.get("games")) != JSON.stringify(data.games))){
-        if(deduplication.has("games")) updates.emit("rawGames", data.games);
+        if(deduplication.has("games") && ready) updates.emit("rawGames", data.games);
         deduplication.set("games",data.games);
     }
     if(data.leagues && (JSON.stringify(deduplication.get("leagues")) != JSON.stringify(data.leagues))){
-        if(deduplication.has("leagues")) updates.emit("rawLeagues", data.leagues);
+        if(deduplication.has("leagues") && ready) updates.emit("rawLeagues", data.leagues);
         deduplication.set("leagues",data.leagues);
     }
     if(data.temporal && (JSON.stringify(deduplication.get("temporal")) != JSON.stringify(data.temporal))){
-        if(deduplication.has("temportal")) updates.emit("rawTemporal", data.temporal);
+        if(deduplication.has("temportal") && ready) updates.emit("rawTemporal", data.temporal);
         deduplication.set("temporal",data.temporal);
     }
     if(data.fights && (JSON.stringify(deduplication.get("fights")) != JSON.stringify(data.fights))){
-        if(deduplication.has("fights")) updates.emit("rawFights", data.fights);
+        if(deduplication.has("fights") && ready) updates.emit("rawFights", data.fights);
         deduplication.set("fights",data.fights);
     }
 };

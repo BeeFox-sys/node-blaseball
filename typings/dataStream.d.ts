@@ -64,34 +64,6 @@ interface Game {
     playCount: number
 }
 
-interface Team {
-    id: string,
-    lineup: Array<string>,
-    rotation: Array<string>,
-    bullpen: Array<string>,
-    bench: Array<string>,
-    seasAttr: Array<string>,
-    permAttr: Array<string>,
-    fullName: string,
-    location: string,
-    mainColor: string,
-    nickname: string,
-    secondaryColor: string,
-    shorthand: string,
-    emoji: number | string,
-    slogan: string,
-    shameRuns: number,
-    totalShames: number,
-    totalShamings: number,
-    seasonShames: number,
-    seasonShamings: number,
-    championships: number,
-    weekAttr: Array<string>,
-    gameAttr: Array<string>,
-    rotationSlot: number,
-    teamSpirit: number
-}
-
 
 interface Games {
     sim: {
@@ -129,8 +101,8 @@ interface Games {
     },
     standings: {
         id: string,
-        losses: {[id: string]: number},
-        wins: {[id: string]: number}
+        losses: Record<string, number>,
+        wins: Record<string, number>
     },
     schedule: Array<Game>,
     tomorrowSchedule: Array<Game>
@@ -170,7 +142,7 @@ interface Leagues {
     divisions: Array<Division>
     leagues: Array<League>
     subleagues: Array<Subleague>
-    teams: Array<Teams>
+    teams: Array<Team>
     tiebreakers: Array<{
         id: string
         order: Array<string>
@@ -186,6 +158,9 @@ interface Temporal {
         gamma: number
         id: string
         zeta: string
+        eta: number
+        iota: number
+        theta: string
     }
 }
 

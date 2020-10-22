@@ -7,13 +7,14 @@
     "test": "tests"
   },
   "typings": "./typings/main.d.ts",
-  "scripts": {
-    "test": "jest"
-  },
+  "scripts": {},
   "author": "BeeFox",
   "license": "ISC",
   "devDependencies": {
-    "jest": "^26.5.3",
+    "@types/node": "^14.14.2",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
     "typescript": "^4.0.3"
   },
   "dependencies": {

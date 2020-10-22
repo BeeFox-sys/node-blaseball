@@ -1,4 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {EventEmitter} from "events";
+import NodeCache from "node-cache";
 /**
  * Recieves Events from blaseball.com
  * 
@@ -18,5 +21,14 @@ class Events extends EventEmitter {
     on(event: "gamesFinished", listener: (schedule:Array<Game>, tomorrowSchedule:Array<Game>)=>void): this;
 
     on(event: "open"): this;
+    on(event: "ready"): this;
+}
 
+class StreamDataCache extends NodeCache {
+    get(key: "sim"): Games["sim"];
+    get(key: "standings"): Games["standings"]
+}
+
+class PlayerCacge extends NodeCache {
+    get(playerId): Player
 }

@@ -19,7 +19,15 @@ source.onerror = (error) => {
     console.error(error);
 };
 source.onmessage = (message) => {
-    const data = JSON.parse(message.data).value;
+    if (message.data.startsWith("<"))
+        return;
+    let data;
+    try {
+        data = JSON.parse(message.data).value;
+    }
+    catch (e) {
+        return console.error("Invalid Json Recieved:", message.data);
+    }
     if (data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))) {
         if (index_1.ready)
             updates.emit("raw", data);

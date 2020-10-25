@@ -67,6 +67,7 @@ events_js_1.default.on("internal", (data) => {
     if (data.games) {
         StreamData.set("sim", data.games.sim);
         StreamData.set("standings", data.games.standings);
+        StreamData.set("games", data.games);
     }
     if ((_a = data.leagues) === null || _a === void 0 ? void 0 : _a.teams.length) {
         const teams = data.leagues.teams;

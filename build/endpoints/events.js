@@ -37,6 +37,7 @@ source.onmessage = (message) => {
             updates.emit("rawLeagues", data.leagues);
         deduplication.set("leagues", data.leagues);
     }
+    console.log(JSON.stringify(data.temporal));
     if (data.temporal && (JSON.stringify(deduplication.get("temporal")) != JSON.stringify(data.temporal))) {
         if (deduplication.has("temportal") && index_1.ready)
             updates.emit("rawTemporal", data.temporal);

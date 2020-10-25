@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const eventsource_1 = __importDefault(require("eventsource"));
-const source = new eventsource_1.default("https://www.blaseball.com/events/streamData", { withCredentials: true, headers: { "User-Agent": "npm-blaseball" } });
+const source = new eventsource_1.default("https://www.blaseball.com/events/streamData", { withCredentials: true, headers: { "User-Agent": "node-blaseball" } });
 const node_cache_1 = __importDefault(require("node-cache"));
 const deduplication = new node_cache_1.default({ stdTTL: 60, checkperiod: 60 * 5 });
 const events_1 = require("events");
@@ -23,6 +23,7 @@ source.onmessage = (message) => {
     if (data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))) {
         if (index_1.ready)
             updates.emit("raw", data);
+        updates.emit("internal", data);
         deduplication.set("raw", data);
     }
     //raw data events

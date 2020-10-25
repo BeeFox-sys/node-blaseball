@@ -1,6 +1,7 @@
 import { playerCache, StreamData, teamCache, updatePlayerCache } from "./utils/caches.js";
 import events from "./endpoints/events.js";
 
+
 function sim(): Games["sim"]{
     return StreamData.get("sim");
 }
@@ -18,7 +19,6 @@ let ready = false;
     ready = true;
     events.emit("ready");
 })();
-
 
 export {
     events,

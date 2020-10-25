@@ -22,13 +22,11 @@ class Events extends EventEmitter {
 
     on(event: "open"): this;
     on(event: "ready"): this;
+
+    private on(event: "internal", listener: (data:RawUpdate)=>void): this;
 }
 
 class StreamDataCache extends NodeCache {
     get(key: "sim"): Games["sim"];
     get(key: "standings"): Games["standings"]
-}
-
-class PlayerCacge extends NodeCache {
-    get(playerId): Player
 }

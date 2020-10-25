@@ -1,5 +1,5 @@
 import EventSource from "eventsource";
-const source:EventSource = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"npm-blaseball"}});
+const source:EventSource = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
 
 import NodeCache from "node-cache";
 const deduplication:NodeCache = new NodeCache({stdTTL: 60, checkperiod: 60*5});
@@ -22,6 +22,7 @@ source.onmessage = (message) => {
     const data = JSON.parse(message.data).value;
     if(data && (JSON.stringify(deduplication.get("raw")) != JSON.stringify(data))){
         if(ready) updates.emit("raw", data);
+        updates.emit("internal", data);
         deduplication.set("raw",data);
     }
     //raw data events

@@ -6,6 +6,10 @@ function sim(): Games["sim"]{
     return StreamData.get("sim");
 }
 
+function games(): Games{
+    return StreamData.get("games");
+}
+
 let ready = false;
 
 (async ()=>{
@@ -23,6 +27,7 @@ let ready = false;
 export {
     events,
     sim,
+    games,
     teamCache,
     playerCache,
     ready

@@ -53,6 +53,7 @@ events.on("internal",(data: RawUpdate)=>{
     if(data.games){
         StreamData.set("sim",data.games.sim);
         StreamData.set("standings",data.games.standings);
+        StreamData.set("games",data.games);
     }
     if(data.leagues?.teams.length){
         const teams = data.leagues.teams;

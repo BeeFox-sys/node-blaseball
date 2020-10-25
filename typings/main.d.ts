@@ -29,4 +29,5 @@ class Events extends EventEmitter {
 class StreamDataCache extends NodeCache {
     get(key: "sim"): Games["sim"];
     get(key: "standings"): Games["standings"]
+    get(key: "games"): Games
 }

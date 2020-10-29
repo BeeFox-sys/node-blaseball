@@ -1,5 +1,5 @@
 import EventSource from "eventsource";
-const source:EventSource = new EventSource("http://localhost:8000/v1/replay?from=2020-10-25T19:00:00.000Z", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
+const source:EventSource = new EventSource("https://www.blaseball.com/events/dataStream", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
 
 import NodeCache from "node-cache";
 const deduplication:NodeCache = new NodeCache();

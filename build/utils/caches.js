@@ -55,7 +55,7 @@ async function updatePlayerCache() {
     const allPlayerBasic = await node_fetch_1.default("https://api.blaseball-reference.com/v1/allPlayers?includeShadows=true").then(res => res.json());
     playerTeamCache.mset(allPlayerBasic.map(p => { return { key: p.player_id, val: p.team_id }; }));
     // console.log(allPlayerBasic.map(p=>{return {key:p.player_id,val:p.team_id};}))
-    const allPlayers = await players_js_1.getPlayers(allPlayerBasic.map(p => p.player_id)).catch(err => { console.log(err); return null; });
+    const allPlayers = await players_js_1.getPlayers(allPlayerBasic.map(p => p.player_id)).catch(err => { console.error(err); return null; });
     if (allPlayers.some(e => e == null))
         return;
     playerCache.mset(allPlayers.map(p => { return { key: p.id, val: p }; }));

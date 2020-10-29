@@ -1,8 +1,8 @@
 const { events, sim, teamCache, playerCache } = require("..");
 
-events.on("raw",(rawData)=>{console.log("Raw Data Update,Season",sim().season,"Day", sim().day)});
+// events.on("raw",(rawData)=>{console.log("Raw Data Update,Season",sim().season,"Day", sim().day)});
 // events.on("rawGames",(rawGames)=>{console.log("Raw Games Update");});
-events.on("rawTemporal",(rawTemporal)=>{console.log("Raw Temporal Update", rawTemporal.doc.zeta);});
+events.on("rawTemporal",(rawTemporal)=>{console.log(rawTemporal.doc.zeta);});
 // events.on("rawLeagues",(rawLeagues)=>{console.log("Raw Leagues Update");});
 // events.on("rawFights",(rawFights)=>{console.log("Raw Fights Update");});
 

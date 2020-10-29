@@ -13,13 +13,19 @@ function games(): Games{
 let ready = false;
 
 (async ()=>{
-    await Promise.all<void,void>([
+    await Promise.all<void,void,void,void>([
         updatePlayerCache(),
         new Promise<void>((resolve)=>{
             events.once("open",resolve);
+        }),
+        new Promise<void>((resolve)=>{
+            events.once("internalGamesUpdate",resolve);
+        }),
+        new Promise<void>((resolve)=>{
+            events.once("internalTeamsUpdate",resolve);
         })
     ]);
-    setTimeout(updatePlayerCache,1000*60*5);
+    setInterval(updatePlayerCache,1000*60*5);
     ready = true;
     events.emit("ready");
 })();

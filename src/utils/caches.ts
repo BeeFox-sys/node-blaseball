@@ -54,10 +54,12 @@ events.on("internal",(data: RawUpdate)=>{
         StreamData.set("sim",data.games.sim);
         StreamData.set("standings",data.games.standings);
         StreamData.set("games",data.games);
+        events.emit("internalGamesUpdate");
     }
     if(data.leagues?.teams.length){
         const teams = data.leagues.teams;
         teamCache.mset(teams.map(t=>{return {key:t.id, val:t};}));
+        events.emit("internalTeamsUpdate");
     }
 });
 

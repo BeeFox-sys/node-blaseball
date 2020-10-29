@@ -24,9 +24,15 @@ exports.ready = ready;
         caches_js_1.updatePlayerCache(),
         new Promise((resolve) => {
             events_js_1.default.once("open", resolve);
+        }),
+        new Promise((resolve) => {
+            events_js_1.default.once("internalGamesUpdate", resolve);
+        }),
+        new Promise((resolve) => {
+            events_js_1.default.once("internalTeamsUpdate", resolve);
         })
     ]);
-    setTimeout(caches_js_1.updatePlayerCache, 1000 * 60 * 5);
+    setInterval(caches_js_1.updatePlayerCache, 1000 * 60 * 5);
     exports.ready = ready = true;
     events_js_1.default.emit("ready");
 })();

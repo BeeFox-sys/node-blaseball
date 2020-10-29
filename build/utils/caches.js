@@ -68,10 +68,12 @@ events_js_1.default.on("internal", (data) => {
         StreamData.set("sim", data.games.sim);
         StreamData.set("standings", data.games.standings);
         StreamData.set("games", data.games);
+        events_js_1.default.emit("internalGamesUpdate");
     }
     if ((_a = data.leagues) === null || _a === void 0 ? void 0 : _a.teams.length) {
         const teams = data.leagues.teams;
         teamCache.mset(teams.map(t => { return { key: t.id, val: t }; }));
+        events_js_1.default.emit("internalTeamsUpdate");
     }
 });
 //# sourceMappingURL=caches.js.map

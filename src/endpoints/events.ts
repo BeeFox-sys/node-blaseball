@@ -1,8 +1,8 @@
 import EventSource from "eventsource";
-const source:EventSource = new EventSource("https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
+const source:EventSource = new EventSource("http://localhost:8000/v1/replay?from=2020-10-25T19:00:00.000Z", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
 
 import NodeCache from "node-cache";
-const deduplication:NodeCache = new NodeCache({stdTTL: 60, checkperiod: 60*5});
+const deduplication:NodeCache = new NodeCache();
 
 import {EventEmitter} from "events";
 import { Events } from "../../typings/main";
@@ -41,7 +41,7 @@ source.onmessage = (message) => {
         deduplication.set("leagues",data.leagues);
     }
     if(data.temporal && (JSON.stringify(deduplication.get("temporal")) != JSON.stringify(data.temporal))){
-        if(deduplication.has("temportal") && ready) updates.emit("rawTemporal", data.temporal);
+        if(deduplication.has("temporal") && ready) updates.emit("rawTemporal", data.temporal);
         deduplication.set("temporal",data.temporal);
     }
     if(data.fights && (JSON.stringify(deduplication.get("fights")) != JSON.stringify(data.fights))){

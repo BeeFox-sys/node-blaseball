@@ -1,6 +1,6 @@
 {
   "name": "blaseball",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A libray for interacting with the blaseball api",
   "main": "build/index.js",
   "directories": {
@@ -8,9 +8,9 @@
   },
   "typings": "./typings/main.d.ts",
   "scripts": {
-    "patch":"npm version patch && git checkout master && git rebase dev && git push && git checkout dev",
-    "minor":"npm version minor && git checkout master && git rebase dev && git push && git checkout dev",
-    "major":"npm version major && git checkout master && git rebase dev && git push && git checkout dev"
+    "patch": "npm version patch && git checkout master && git rebase dev && git push && git checkout dev",
+    "minor": "npm version minor && git checkout master && git rebase dev && git push && git checkout dev",
+    "major": "npm version major && git checkout master && git rebase dev && git push && git checkout dev"
   },
   "author": "BeeFox",
   "license": "ISC",

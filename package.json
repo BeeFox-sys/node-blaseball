@@ -8,9 +8,9 @@
   },
   "typings": "./typings/main.d.ts",
   "scripts": {
-    "patch": "npm version patch && git checkout master && git rebase dev && git push && git checkout dev",
-    "minor": "npm version minor && git checkout master && git rebase dev && git push && git checkout dev",
-    "major": "npm version major && git checkout master && git rebase dev && git push && git checkout dev"
+    "patch": "npm version patch && git checkout master && git rebase dev && git push && git checkout dev && git push",
+    "minor": "npm version minor && git checkout master && git rebase dev && git push && git checkout dev && git push",
+    "major": "npm version major && git checkout master && git rebase dev && git push && git checkout dev && git push"
   },
   "author": "BeeFox",
   "license": "ISC",

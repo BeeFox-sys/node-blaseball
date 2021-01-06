@@ -1,5 +1,5 @@
 import EventSource from "eventsource";
-const source:EventSource = new EventSource("https://www.blaseball.com/events/dataStream", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
+const source:EventSource = new EventSource(process.env.STREAMDATA||"https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
 
 import NodeCache from "node-cache";
 const deduplication:NodeCache = new NodeCache();
@@ -14,6 +14,7 @@ source.onopen = () => {
     updates.emit("open");
 };
 source.onerror = (error)=>{
+    // console.log(error);
     if(error.message == undefined) return;
     console.error(error);
 };

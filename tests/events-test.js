@@ -1,8 +1,8 @@
-const { events, sim, teamCache, playerCache } = require("..");
+const { events, sim, teamCache, playerCache, gameCache, coffeeCache, itemCache, weatherCache } = require("..");
 
 // events.on("raw",(rawData)=>{console.log("Raw Data Update,Season",sim().season,"Day", sim().day)});
 // events.on("rawGames",(rawGames)=>{console.log("Raw Games Update");});
-events.on("rawTemporal",(rawTemporal)=>{console.log(rawTemporal.doc.zeta);});
+// events.on("rawTemporal",(rawTemporal)=>{console.log(rawTemporal.doc.zeta);});
 // events.on("rawLeagues",(rawLeagues)=>{console.log("Raw Leagues Update");});
 // events.on("rawFights",(rawFights)=>{console.log("Raw Fights Update");});
 
@@ -15,6 +15,9 @@ events.on("rawTemporal",(rawTemporal)=>{console.log(rawTemporal.doc.zeta);});
 events.once("open",()=>{console.log("Connected");});
 events.once("ready",async ()=>{
     console.log("ready")
+    // console.log(await weatherCache.fetch(3))
+    // console.log(await itemCache.fetch("GUNBLADE_A"))
+    // console.log(await gameCache.fetchByDay(20,10))
     // console.log(await teamCache.byPlayer("34267632-8c32-4a8b-b5e6-ce1568bb0639"))
     // console.log(await playerCache.byName("Gunther O'Brian"))    
 });

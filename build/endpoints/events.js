@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const eventsource_1 = __importDefault(require("eventsource"));
-const source = new eventsource_1.default("https://www.blaseball.com/events/dataStream", { withCredentials: true, headers: { "User-Agent": "node-blaseball" } });
+const source = new eventsource_1.default(process.env.STREAMDATA || "https://www.blaseball.com/events/streamData", { withCredentials: true, headers: { "User-Agent": "node-blaseball" } });
 const node_cache_1 = __importDefault(require("node-cache"));
 const deduplication = new node_cache_1.default();
 const events_1 = require("events");
@@ -14,6 +14,7 @@ source.onopen = () => {
     updates.emit("open");
 };
 source.onerror = (error) => {
+    // console.log(error);
     if (error.message == undefined)
         return;
     console.error(error);

@@ -1,4 +1,14 @@
-import { playerCache, StreamData, teamCache, updatePlayerCache } from "./utils/caches.js";
+import { 
+    coffeeCache,
+    playerCache,
+    StreamData,
+    teamCache,
+    updatePlayerCache,
+    gameCache,
+    bloodCache,
+    itemCache,
+    modCache,
+    weatherCache } from "./utils/caches.js";
 import events from "./endpoints/events.js";
 
 
@@ -36,5 +46,11 @@ export {
     games,
     teamCache,
     playerCache,
+    gameCache,
+    coffeeCache,
+    bloodCache,
+    itemCache,
+    modCache,
+    weatherCache,
     ready
 };

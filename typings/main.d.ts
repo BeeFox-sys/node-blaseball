@@ -31,3 +31,24 @@ class StreamDataCache extends NodeCache {
     get(key: "standings"): Games["standings"]
     get(key: "games"): Games
 }
+
+class item {
+    id: string
+    name: string
+    attr: string
+}
+
+class mod {
+    id: string//	"FIREPROOF"
+    color: string//	"#a5c5f0"
+    textColor:string//	"#a5c5f0"
+    background:string//	"#4c77b0"
+    title:string//	"Fireproof"
+    description:string//	"A Fireproof player can not be incinerated."
+}
+
+class weather {
+    background:string
+    color:string
+    name:string
+}

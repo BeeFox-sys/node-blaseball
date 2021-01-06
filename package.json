@@ -1,6 +1,6 @@
 {
   "name": "blaseball",
-  "version": "0.1.10",
+  "version": "1.0.0",
   "description": "A libray for interacting with the blaseball api",
   "main": "build/index.js",
   "directories": {

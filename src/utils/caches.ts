@@ -46,7 +46,7 @@ class GameCache extends NodeCache{
     }
     async fetchByDay(day: number, season: number, cache = true){
         if(this.dayCache.has(`${season},${day}`) && cache) return this.dayCache.get(`${season},${day}`);
-        const games = await getGamesByDay(day,season);
+        const games = await getGamesByDay(season,day);
         if(games != null){
             this.dayCache.set(`${season},${day}`,games);
             for(const game of games){

@@ -17,7 +17,8 @@ events.once("ready",async ()=>{
     console.log("ready")
     // console.log(await weatherCache.fetch(3))
     // console.log(await itemCache.fetch("GUNBLADE_A"))
-    // console.log(await gameCache.fetchByDay(20,10))
+    console.log(await gameCache.fetchByDay(20,10))
+    console.log(await gameCache.fetch('d40783ec-d26a-4d07-803b-68b8e87329c4'))
     // console.log(await teamCache.byPlayer("34267632-8c32-4a8b-b5e6-ce1568bb0639"))
     // console.log(await playerCache.byName("Gunther O'Brian"))    
 });

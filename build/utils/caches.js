@@ -75,7 +75,7 @@ class GameCache extends node_cache_1.default {
 class CoffeeCache extends node_cache_1.default {
     constructor() {
         super();
-        node_fetch_1.default("https://www.blaseball.com/database/coffee?ids=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((coffee) => {
+        node_fetch_1.default("https://www.blaseball.com/database/coffee?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((coffee) => {
             this.mset(coffee.map((v, i) => { return { key: i, val: v }; }));
         });
     }
@@ -90,7 +90,7 @@ class CoffeeCache extends node_cache_1.default {
 class BloodCache extends node_cache_1.default {
     constructor() {
         super();
-        node_fetch_1.default("https://www.blaseball.com/database/blood?ids=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((blood) => {
+        node_fetch_1.default("https://www.blaseball.com/database/blood?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((blood) => {
             this.mset(blood.map((v, i) => { return { key: i, val: v }; }));
         });
     }

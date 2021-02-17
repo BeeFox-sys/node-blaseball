@@ -61,7 +61,7 @@ class CoffeeCache extends NodeCache{
 
     constructor(){
         super();
-        fetch("https://www.blaseball.com/database/coffee?ids=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((coffee)=>{
+        fetch("https://www.blaseball.com/database/coffee?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((coffee)=>{
             this.mset(coffee.map((v,i)=>{return{key:i,val:v};}));
         });
     }
@@ -77,7 +77,7 @@ class BloodCache extends NodeCache{
 
     constructor(){
         super();
-        fetch("https://www.blaseball.com/database/blood?ids=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((blood)=>{
+        fetch("https://www.blaseball.com/database/blood?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((blood)=>{
             this.mset(blood.map((v,i)=>{return{key:i,val:v};}));
         });
     }

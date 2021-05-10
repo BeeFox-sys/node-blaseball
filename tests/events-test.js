@@ -7,8 +7,8 @@ const { events, sim, teamCache, playerCache, gameCache, coffeeCache, itemCache, 
 // events.on("rawFights",(rawFights)=>{console.log("Raw Fights Update");});
 
 
-// events.on("gameUpdate",(newGame, oldGame)=>{console.log("Game Update:",newGame.awayTeamNickname,"@",newGame.homeTeamNickname);});
-// events.on("gameComplete",(game)=>{console.log("Game Complete:",game.awayTeamNickname,"@",game.homeTeamNickname);});
+// events.on("gameUpdate",(newGame, oldGame)=>{console.log("Game Update:",newGame.awayTeamNickname,newGame.awayScore,"@",newGame.homeTeamNickname,newGame.homeScore);});
+events.on("gameComplete",(game)=>{console.log("Game Complete:",game.awayTeamNickname,"@",game.homeTeamNickname, game.outcomes);});
 // events.on("gameStart",(game)=>{console.log("Game Start:",game.awayTeamNickname,"@",game.homeTeamNickname);});
 // events.on("gamesFinished",(today,tomorrow)=>{console.log("All Games Finished");});
 

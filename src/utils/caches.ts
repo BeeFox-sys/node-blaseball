@@ -121,12 +121,9 @@ class WeatherCache extends NodeCache{
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async fetch(id:string, cache = true):Promise<weather>{
         return this.get(id);
-        // if(this.has(id) && cache) return this.get(id);
-        // const mod = await fetch("https://www.blaseball.com/database/items?ids="+id).then(b=>b.json()).then(c=>c[0]);
-        // this.set(id,mod);
-        // return mod;
     }
 }
+
 
 const playerCache = new PlayerCache();
 const playerNamesCache = new NodeCache();
@@ -140,13 +137,11 @@ const modCache = new ModsCache();
 const weatherCache = new WeatherCache();
 
 async function updatePlayerCache(): Promise<void>{
-    const allPlayerBasic = await fetch("https://api.blaseball-reference.com/v1/allPlayers?includeShadows=true").then(res=>res.json());  
-    playerTeamCache.mset(allPlayerBasic.map(p=>{return {key:p.player_id,val:p.team_id};}));
-    // console.log(allPlayerBasic.map(p=>{return {key:p.player_id,val:p.team_id};}))
-    const allPlayers = await getPlayers(allPlayerBasic.map(p=>p.player_id)).catch(err=>{console.error(err);return null;});
+    const allPlayerBasic = await fetch("https://www.blaseball.com/database/playerNamesIds").then(res=>res.json());
+    const allPlayers = await getPlayers(allPlayerBasic.map(p=>p.id)).catch(err=>{console.error(err);return null;});
     if(allPlayers.some(e=>e==null)) return;
     playerCache.mset(allPlayers.map(p=>{return {key:p.id,val:p};}));
-    playerNamesCache.mset(allPlayers.map(p=>{return {key:p.name,val:p.id};}));
+    playerNamesCache.mset(allPlayerBasic.map(p=>{return {key:p.name,val:p.id};}));
 }
 
 events.on("internal",(data: RawUpdate)=>{
@@ -166,6 +161,8 @@ events.on("internal",(data: RawUpdate)=>{
         events.emit("internalTeamsUpdate");
     }
 });
+
+setInterval(updatePlayerCache, 5*60*100);
 
 export {
     StreamData,

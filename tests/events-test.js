@@ -1,4 +1,4 @@
-const { events, sim, teamCache, playerCache, gameCache, coffeeCache, itemCache, weatherCache } = require("..");
+const { events, sim, teamCache, playerCache, gameCache, coffeeCache, itemCache, weatherCache, playerNamesCache } = require("..");
 
 // events.on("raw",(rawData)=>{console.log("Raw Data Update,Season",sim().season,"Day", sim().day)});
 // events.on("rawGames",(rawGames)=>{console.log("Raw Games Update");});
@@ -20,5 +20,6 @@ events.once("ready",async ()=>{
     // console.log(await gameCache.fetchByDay(20,10))
     // console.log(await gameCache.fetch('d40783ec-d26a-4d07-803b-68b8e87329c4'))
     // console.log(await teamCache.byPlayer("34267632-8c32-4a8b-b5e6-ce1568bb0639"))
-    // console.log(await playerCache.byName("Gunther O'Brian"))    
+    console.log(await playerCache.byName("Gunther O'Brian"))  
+    console.log(playerNamesCache.keys())  
 });

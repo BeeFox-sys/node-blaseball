@@ -130,10 +130,6 @@ class WeatherCache extends node_cache_1.default {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async fetch(id, cache = true) {
         return this.get(id);
-        // if(this.has(id) && cache) return this.get(id);
-        // const mod = await fetch("https://www.blaseball.com/database/items?ids="+id).then(b=>b.json()).then(c=>c[0]);
-        // this.set(id,mod);
-        // return mod;
     }
 }
 const playerCache = new PlayerCache();
@@ -157,14 +153,12 @@ exports.modCache = modCache;
 const weatherCache = new WeatherCache();
 exports.weatherCache = weatherCache;
 async function updatePlayerCache() {
-    const allPlayerBasic = await node_fetch_1.default("https://api.blaseball-reference.com/v1/allPlayers?includeShadows=true").then(res => res.json());
-    playerTeamCache.mset(allPlayerBasic.map(p => { return { key: p.player_id, val: p.team_id }; }));
-    // console.log(allPlayerBasic.map(p=>{return {key:p.player_id,val:p.team_id};}))
-    const allPlayers = await players_js_1.getPlayers(allPlayerBasic.map(p => p.player_id)).catch(err => { console.error(err); return null; });
+    const allPlayerBasic = await node_fetch_1.default("https://www.blaseball.com/database/playerNamesIds").then(res => res.json());
+    const allPlayers = await players_js_1.getPlayers(allPlayerBasic.map(p => p.id)).catch(err => { console.error(err); return null; });
     if (allPlayers.some(e => e == null))
         return;
     playerCache.mset(allPlayers.map(p => { return { key: p.id, val: p }; }));
-    playerNamesCache.mset(allPlayers.map(p => { return { key: p.name, val: p.id }; }));
+    playerNamesCache.mset(allPlayerBasic.map(p => { return { key: p.name, val: p.id }; }));
 }
 exports.updatePlayerCache = updatePlayerCache;
 events_js_1.default.on("internal", (data) => {
@@ -185,4 +179,5 @@ events_js_1.default.on("internal", (data) => {
         events_js_1.default.emit("internalTeamsUpdate");
     }
 });
+setInterval(updatePlayerCache, 5 * 60 * 100);
 //# sourceMappingURL=caches.js.map

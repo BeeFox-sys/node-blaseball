@@ -8,7 +8,8 @@ import {
     bloodCache,
     itemCache,
     modCache,
-    weatherCache } from "./utils/caches.js";
+    weatherCache, 
+    playerNamesCache} from "./utils/caches.js";
 import events from "./endpoints/events.js";
 
 
@@ -46,6 +47,7 @@ export {
     games,
     teamCache,
     playerCache,
+    playerNamesCache,
     gameCache,
     coffeeCache,
     bloodCache,

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ready = exports.weatherCache = exports.modCache = exports.itemCache = exports.bloodCache = exports.coffeeCache = exports.gameCache = exports.playerCache = exports.teamCache = exports.games = exports.sim = exports.events = void 0;
+exports.ready = exports.weatherCache = exports.modCache = exports.itemCache = exports.bloodCache = exports.coffeeCache = exports.gameCache = exports.playerNamesCache = exports.playerCache = exports.teamCache = exports.games = exports.sim = exports.events = void 0;
 const caches_js_1 = require("./utils/caches.js");
 Object.defineProperty(exports, "coffeeCache", { enumerable: true, get: function () { return caches_js_1.coffeeCache; } });
 Object.defineProperty(exports, "playerCache", { enumerable: true, get: function () { return caches_js_1.playerCache; } });
@@ -13,6 +13,7 @@ Object.defineProperty(exports, "bloodCache", { enumerable: true, get: function (
 Object.defineProperty(exports, "itemCache", { enumerable: true, get: function () { return caches_js_1.itemCache; } });
 Object.defineProperty(exports, "modCache", { enumerable: true, get: function () { return caches_js_1.modCache; } });
 Object.defineProperty(exports, "weatherCache", { enumerable: true, get: function () { return caches_js_1.weatherCache; } });
+Object.defineProperty(exports, "playerNamesCache", { enumerable: true, get: function () { return caches_js_1.playerNamesCache; } });
 const events_js_1 = __importDefault(require("./endpoints/events.js"));
 exports.events = events_js_1.default;
 function sim() {

@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 const groupingSize = 180;
 
 async function getPlayers(players:Array<string>): Promise<Array<Player>>{
-    const url = "https://www.blaseball.com/database/players?ids=";
+    const url = "https://api.blaseball.com/database/players?ids=";
     const groups = [];
     const array = players;
     while(array.length > groupingSize){

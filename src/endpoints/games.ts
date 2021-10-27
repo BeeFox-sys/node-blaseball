@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 
 
 async function getGameByID(id: string): Promise<Game>{
-    return await fetch("https://www.blaseball.com/database/gameById/"+id)
+    return await fetch("https://api.blaseball.com/database/gameById/"+id)
         .then(async res => {
             if(res.status == 400) return null;
             if(!res.ok) throw new Error(res.statusText);
@@ -13,7 +13,7 @@ async function getGameByID(id: string): Promise<Game>{
 }
 
 async function getGamesByDay(season:number,day:number): Promise<Array<Game>>{
-    return await fetch("https://www.blaseball.com/database/games?season="+season+"&day="+day)
+    return await fetch("https://api.blaseball.com/database/games?season="+season+"&day="+day)
         .then(async res => {
             if(!res.ok) throw new Error(res.statusText);
             const dayData = await res.json();

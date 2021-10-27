@@ -12,11 +12,9 @@ class TeamCache extends NodeCache{
         if(!/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/.test(id)) return undefined;
         const teams = await getTeams([id]);
         const team = teams[0];
-        if(team != null) teamCache.set(team.id,team);
+        console.log(team.id);
+        if(team != null && team != undefined) teamCache.set(team.id,team);
         return team;
-    }
-    async byPlayer(id:string){
-        return this.get(playerTeamCache.get(id));
     }
 }
 
@@ -30,7 +28,9 @@ class PlayerCache extends NodeCache{
         return player;
     }
     async byName(id:string){
-        return this.get(playerNamesCache.get(id));
+        const player:any = playerNamesCache.get(id);
+        if(player == null) return null;
+        return this.get(player);
     }
 }
 
@@ -61,14 +61,14 @@ class CoffeeCache extends NodeCache{
 
     constructor(){
         super();
-        fetch("https://www.blaseball.com/database/coffee?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((coffee)=>{
+        fetch("https://api.blaseball.com/database/coffee?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((coffee)=>{
             this.mset(coffee.map((v,i)=>{return{key:i,val:v};}));
         });
     }
 
     async fetch(id:number, cache = true):Promise<string>{
         if(this.has(id) && cache) return this.get(id);
-        const coffee = await fetch("https://www.blaseball.com/database/coffee?ids="+id).then(b=>b.json()).then(c=>c[0]);
+        const coffee = await fetch("https://api.blaseball.com/database/coffee?ids="+id).then(b=>b.json()).then(c=>c[0]);
         this.set(id,coffee);
         return coffee;
     }
@@ -77,14 +77,14 @@ class BloodCache extends NodeCache{
 
     constructor(){
         super();
-        fetch("https://www.blaseball.com/database/blood?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((blood)=>{
+        fetch("https://api.blaseball.com/database/blood?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b=>b.json()).then((blood)=>{
             this.mset(blood.map((v,i)=>{return{key:i,val:v};}));
         });
     }
 
     async fetch(id:number, cache = true):Promise<string>{
         if(this.has(id) && cache) return this.get(id);
-        const blood = await fetch("https://www.blaseball.com/database/blood?ids="+id).then(b=>b.json()).then(c=>c[0]);
+        const blood = await fetch("https://api.blaseball.com/database/blood?ids="+id).then(b=>b.json()).then(c=>c[0]);
         this.set(id,blood);
         return blood;
     }
@@ -94,7 +94,7 @@ class ModsCache extends NodeCache{
 
     async fetch(id:string, cache = true):Promise<mod>{
         if(this.has(id) && cache) return this.get(id);
-        const mod = await fetch("https://www.blaseball.com/database/mods?ids="+id).then(b=>b.json()).then(c=>c[0]);
+        const mod = await fetch("https://api.blaseball.com/database/mods?ids="+id).then(b=>b.json()).then(c=>c[0]);
         this.set(id,mod);
         return mod;
     }
@@ -103,7 +103,7 @@ class ModsCache extends NodeCache{
 class ItemsCache extends NodeCache{
     async fetch(id:string, cache = true):Promise<item>{
         if(this.has(id) && cache) return this.get(id);
-        const mod = await fetch("https://www.blaseball.com/database/items?ids="+id).then(b=>b.json()).then(c=>c[0]);
+        const mod = await fetch("https://api.blaseball.com/database/items?ids="+id).then(b=>b.json()).then(c=>c[0]);
         this.set(id,mod);
         return mod;
     }
@@ -137,7 +137,7 @@ const modCache = new ModsCache();
 const weatherCache = new WeatherCache();
 
 async function updatePlayerCache(): Promise<void>{
-    const allPlayerBasic = await fetch("https://www.blaseball.com/database/playerNamesIds").then(res=>res.json());
+    const allPlayerBasic = await fetch("https://api.blaseball.com/database/playerNamesIds").then(res=>res.json());
     const allPlayers = await getPlayers(allPlayerBasic.map(p=>p.id)).catch(err=>{console.error(err);return null;});
     if(allPlayers.some(e=>e==null)) return;
     playerCache.mset(allPlayers.map(p=>{return {key:p.id,val:p};}));

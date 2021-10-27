@@ -1,5 +1,5 @@
 import EventSource from "eventsource";
-const source:EventSource = new EventSource(process.env.STREAMDATA||"https://www.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
+const source:EventSource = new EventSource(process.env.STREAMDATA||"https://api.blaseball.com/events/streamData", {withCredentials: true, headers: {"User-Agent":"node-blaseball"}});
 
 import NodeCache from "node-cache";
 const deduplication:NodeCache = new NodeCache();

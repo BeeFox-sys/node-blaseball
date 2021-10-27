@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getTeams = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
 async function getTeams(teams) {
-    const req = "https://www.blaseball.com/database/team?id=";
+    const req = "https://api.blaseball.com/database/team?id=";
     const reqs = [];
     for (const team of teams) {
         reqs.push(node_fetch_1.default(req + team, { headers: { "User-Agent": "node-blaseball" } }).then(async (res) => {

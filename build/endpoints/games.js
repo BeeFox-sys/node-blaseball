@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getGamesByDay = exports.getGameByID = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
 async function getGameByID(id) {
-    return await node_fetch_1.default("https://www.blaseball.com/database/gameById/" + id)
+    return await node_fetch_1.default("https://api.blaseball.com/database/gameById/" + id)
         .then(async (res) => {
         if (res.status == 400)
             return null;
@@ -19,7 +19,7 @@ async function getGameByID(id) {
 }
 exports.getGameByID = getGameByID;
 async function getGamesByDay(season, day) {
-    return await node_fetch_1.default("https://www.blaseball.com/database/games?season=" + season + "&day=" + day)
+    return await node_fetch_1.default("https://api.blaseball.com/database/games?season=" + season + "&day=" + day)
         .then(async (res) => {
         if (!res.ok)
             throw new Error(res.statusText);

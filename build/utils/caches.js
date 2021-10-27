@@ -19,12 +19,10 @@ class TeamCache extends node_cache_1.default {
             return undefined;
         const teams = await teams_js_1.getTeams([id]);
         const team = teams[0];
-        if (team != null)
+        console.log(team.id);
+        if (team != null && team != undefined)
             teamCache.set(team.id, team);
         return team;
-    }
-    async byPlayer(id) {
-        return this.get(playerTeamCache.get(id));
     }
 }
 class PlayerCache extends node_cache_1.default {
@@ -40,7 +38,10 @@ class PlayerCache extends node_cache_1.default {
         return player;
     }
     async byName(id) {
-        return this.get(playerNamesCache.get(id));
+        const player = playerNamesCache.get(id);
+        if (player == null)
+            return null;
+        return this.get(player);
     }
 }
 const games_1 = require("../endpoints/games");
@@ -75,14 +76,14 @@ class GameCache extends node_cache_1.default {
 class CoffeeCache extends node_cache_1.default {
     constructor() {
         super();
-        node_fetch_1.default("https://www.blaseball.com/database/coffee?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((coffee) => {
+        node_fetch_1.default("https://api.blaseball.com/database/coffee?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((coffee) => {
             this.mset(coffee.map((v, i) => { return { key: i, val: v }; }));
         });
     }
     async fetch(id, cache = true) {
         if (this.has(id) && cache)
             return this.get(id);
-        const coffee = await node_fetch_1.default("https://www.blaseball.com/database/coffee?ids=" + id).then(b => b.json()).then(c => c[0]);
+        const coffee = await node_fetch_1.default("https://api.blaseball.com/database/coffee?ids=" + id).then(b => b.json()).then(c => c[0]);
         this.set(id, coffee);
         return coffee;
     }
@@ -90,14 +91,14 @@ class CoffeeCache extends node_cache_1.default {
 class BloodCache extends node_cache_1.default {
     constructor() {
         super();
-        node_fetch_1.default("https://www.blaseball.com/database/blood?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((blood) => {
+        node_fetch_1.default("https://api.blaseball.com/database/blood?ids=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20").then(b => b.json()).then((blood) => {
             this.mset(blood.map((v, i) => { return { key: i, val: v }; }));
         });
     }
     async fetch(id, cache = true) {
         if (this.has(id) && cache)
             return this.get(id);
-        const blood = await node_fetch_1.default("https://www.blaseball.com/database/blood?ids=" + id).then(b => b.json()).then(c => c[0]);
+        const blood = await node_fetch_1.default("https://api.blaseball.com/database/blood?ids=" + id).then(b => b.json()).then(c => c[0]);
         this.set(id, blood);
         return blood;
     }
@@ -106,7 +107,7 @@ class ModsCache extends node_cache_1.default {
     async fetch(id, cache = true) {
         if (this.has(id) && cache)
             return this.get(id);
-        const mod = await node_fetch_1.default("https://www.blaseball.com/database/mods?ids=" + id).then(b => b.json()).then(c => c[0]);
+        const mod = await node_fetch_1.default("https://api.blaseball.com/database/mods?ids=" + id).then(b => b.json()).then(c => c[0]);
         this.set(id, mod);
         return mod;
     }
@@ -115,7 +116,7 @@ class ItemsCache extends node_cache_1.default {
     async fetch(id, cache = true) {
         if (this.has(id) && cache)
             return this.get(id);
-        const mod = await node_fetch_1.default("https://www.blaseball.com/database/items?ids=" + id).then(b => b.json()).then(c => c[0]);
+        const mod = await node_fetch_1.default("https://api.blaseball.com/database/items?ids=" + id).then(b => b.json()).then(c => c[0]);
         this.set(id, mod);
         return mod;
     }
@@ -153,7 +154,7 @@ exports.modCache = modCache;
 const weatherCache = new WeatherCache();
 exports.weatherCache = weatherCache;
 async function updatePlayerCache() {
-    const allPlayerBasic = await node_fetch_1.default("https://www.blaseball.com/database/playerNamesIds").then(res => res.json());
+    const allPlayerBasic = await node_fetch_1.default("https://api.blaseball.com/database/playerNamesIds").then(res => res.json());
     const allPlayers = await players_js_1.getPlayers(allPlayerBasic.map(p => p.id)).catch(err => { console.error(err); return null; });
     if (allPlayers.some(e => e == null))
         return;

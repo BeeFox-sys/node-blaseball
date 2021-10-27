@@ -7,7 +7,7 @@ exports.getPlayers = void 0;
 const node_fetch_1 = __importDefault(require("node-fetch"));
 const groupingSize = 180;
 async function getPlayers(players) {
-    const url = "https://www.blaseball.com/database/players?ids=";
+    const url = "https://api.blaseball.com/database/players?ids=";
     const groups = [];
     const array = players;
     while (array.length > groupingSize) {
